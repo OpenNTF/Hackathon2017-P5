@@ -16,18 +16,12 @@
     <modules>
         <module>bundles/dominoredsubscription</module>
     </modules>
-    <!-- <repositories>
+    <repositories>
         <repository>
-            <id>OpenNTF Maven Repository</id>
-            <url>http://</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <id>org.openntf.domino</id>
+            <url>https://artifactory.openntf.org/openntf/</url>
         </repository>
-    </repositories> -->
+    </repositories>
     <!-- Version control information -->
     <scm>
         <connection>scm:git:git://github.com/OpenNTF/Hackathon2017-P5</connection>
