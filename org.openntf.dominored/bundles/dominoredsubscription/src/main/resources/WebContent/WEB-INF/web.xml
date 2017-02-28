@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<display-name>DominoRED</display-name>
+	<servlet>
+		<servlet-name>DominoREDApp</servlet-name>
+		<servlet-class>org.openntf.dominored.SubscriptionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>org.openntf.dominored.SubscriptionApplication
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DominoREDApp</servlet-name>
+		<url-pattern>/dominored/*</url-pattern>
+	</servlet-mapping>
+</web-app>

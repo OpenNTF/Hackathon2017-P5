@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.openntf.dominored</groupId>
+		<artifactId>org.openntf.dominored.root</artifactId>
+		<version>0.0.1</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+	<artifactId>dominoredsubscription</artifactId>
+	<!-- <packaging>bundle</packaging> -->
+	<version>0.0.1-SNAPSHOT</version>
+	<name>DominoRED</name>
+	<description>PubSub for Domino to integrate with NodeRED</description>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.github.spullara.mustache.java/compiler -->
+		<dependency>
+			<groupId>com.github.spullara.mustache.java</groupId>
+			<artifactId>compiler</artifactId>
+			<version>0.8.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jamonapi</groupId>
+			<artifactId>jamon</artifactId>
+			<version>2.81</version>
+		</dependency>
+		<!-- PROVIDED -->
+		<dependency>
+			<groupId>com.ibm.domino</groupId>
+			<artifactId>osgi.core</artifactId>
+			<version>9.0.1.20131004</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.runtime</artifactId>
+			<version>3.7.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ibm.lotus.domino</groupId>
+			<artifactId>notes</artifactId>
+			<version>9.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.5.1</version>
+			<executions>
+				<execution>
+					<id>default-compile</id>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</execution>
+				<execution>
+					<id>default-testCompile</id>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>maven-bundle-plugin</artifactId>
+			<version>3.2.0</version>
+			<extensions>true</extensions>
+			<configuration>
+				<instructions>
+					<Bundle-Name>${project.name}</Bundle-Name>
+					<Bundle-Version>${buildNumber}</Bundle-Version>
+					<Bundle-Activator>com.ibm.verse.domino.core.Activator</Bundle-Activator>
+					<Bundle-SymbolicName>${project.groupId}.${project.artifactId};singleton:=true</Bundle-SymbolicName>
+					<Require-Bundle>
+						com.ibm.designer.lib.javamail;bundle-version="9.0.1",
+						org.eclipse.core.runtime;bundle-version="3.4.0"
+					</Require-Bundle>
+					<Export-Package>
+						com.github.mustachejava, com.google.gson, com.google.gson.annotations,
+						com.google.gson.internal, com.google.gson.internal.bind,
+						com.google.gson.internal.bind.util, com.google.gson.reflect,
+						com.google.gson.stream, com.jamonapi, com.jamonapi.aop,
+						com.jamonapi.aop.general, com.jamonapi.aop.spring,
+						com.jamonapi.distributed, com.jamonapi.http, com.jamonapi.jmx,
+						com.jamonapi.log4j, com.jamonapi.proxy, com.jamonapi.utils
+					</Export-Package>
+					<Import-Package>
+						com.ibm.domino.osgi.core.context, lotus.domino, lotus.domino.util,
+						org.osgi.framework;version="1.3.0"
+					</Import-Package>
+					<Embed-Dependency>*;scope=runtime</Embed-Dependency>
+					<Bundle-ClassPath>
+						., src/main/resources, lib/jamon-2.81.jar, lib/gson-2.7.jar,
+						lib/guava-18.0.jar, lib/compiler-0.8.4.jar, lib/jsoup-1.9.2.jar
+					</Bundle-ClassPath>
+					<Include-Resource>
+						{maven-resources}, {maven-dependencies}
+					</Include-Resource>
+				</instructions>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>2.19.1</version>
+			<configuration>
+				<testFailureIgnore>true</testFailureIgnore>
+				<forkCount>1</forkCount>
+			</configuration>
+		</plugin>
+	</plugins>
+</project>
